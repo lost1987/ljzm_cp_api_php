@@ -1,0 +1,2 @@
+厂商key生成原则
+hash("SHA1", $platform['name'].PWD_FLAG);
