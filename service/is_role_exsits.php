@@ -40,6 +40,7 @@ $serverid = 10000*$_platform['bid'] + intval($sid);
 $server = $db -> select("*")->from(TB_SERVERS)->where("id = $serverid")->get()->result_object();
 if(FALSE == $server)return $errors[502];
 
+$user = $_platform['bflag'].$user;
 //验证角色
 $db -> connect($server->ip.':'.$server->port,$server->dbuser,$server->dbpwd);
 $db -> select_db($server->dynamic_dbname);
