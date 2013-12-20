@@ -9,5 +9,13 @@
 return array(
         1 => 'login',
        2 => 'recharge',
-       3 => 'is_role_exsits'
+       3 => 'is_role_exsits',
+       4 => 'open',
+       5 => 'stop',
+       6 => 'reboot',
+       7 => 'update',
+       8 =>'merge',
+       9 => 'rollback',
+       10 => 'clear',
+       11 => 'check_game_process'
 );

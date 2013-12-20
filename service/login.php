@@ -43,6 +43,9 @@ $serverid = 10000*$_platform['bid'] + intval($sid);
 $server = $db -> select("*")->from(TB_SERVERS)->where("id = $serverid")->get()->result_object();
 if(FALSE == $server)return $errors[502];
 
+if($server->stat == 0 || $server->status == 0)
+        return $errors[102];
+
 //验证用户
 $username = $_platform['bflag'].$username;
 $password = md5($username.$_platform['key'].PWD_FLAG);

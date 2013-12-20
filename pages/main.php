@@ -7,9 +7,13 @@
  */
 
 if(!defined('BASEPATH'))exit;
-
-$swfstring = BINURL . 'ljzm_main10.swf?ver=' . CURVER . '&server=' . $server->server_ip . '&port=' . $server->server_port . '&res=' . RESURL . '&bin=' . BINURL . '&loginname=' . $username . '&loginpwd=' . $password . '&logintime=123'  .  '&sid=' . $sid . '&loginmode=new&urlroot=' . URLROOT;
-
+//查询游戏版本
+$ver = $db -> select("version") -> from(TB_CVERSION) -> where("id = $server->gamecver") -> get() -> result_object();
+$series = $db -> select("name") -> from(TB_SERIES) -> where("id = $server->gameseries") -> get() -> result_object();
+$binurl = BASEURL.$series->name.'_'.$ver->version.'/bin/';
+$resurl = BASEURL.$series->name.'_'.$ver->version.'/';
+$urlroot = BASEURL.$series->name.'_'.$ver->version.'/';
+$swfstring = $binurl . 'ljzm_main10.swf?ver=' . CURVER . '&server=' . $server->server_ip . '&port=' . $server->server_port . '&res=' . $resurl . '&bin=' . $binurl . '&loginname=' . $username . '&loginpwd=' . $password . '&logintime=123'  .  '&sid=' . $sid . '&loginmode=new&urlroot=' . $urlroot;
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
@@ -31,7 +35,7 @@ $swfstring = BINURL . 'ljzm_main10.swf?ver=' . CURVER . '&server=' . $server->se
         var params = {};
         params.quality = "high";
         params.bgcolor = "#000000";
-        params.allowscriptaccess = "sameDomain";
+        params.allowscriptaccess = "always";
         params.allowfullscreen = "true";
         var attributes = {};
         if (navigator.appName.indexOf("Microsoft") != -1) {
@@ -59,13 +63,13 @@ $swfstring = BINURL . 'ljzm_main10.swf?ver=' . CURVER . '&server=' . $server->se
         <param name="movie" value="<?php echo $swfstring; ?>" />
         <param name="quality" value="high" />
         <param name="bgcolor" value="#000000" />
-        <param name="allowScriptAccess" value="sameDomain" />
+        <param name="allowScriptAccess" value="always" />
         <param name="allowFullScreen" value="true" />
         <!--[if !IE]>-->
         <object type="application/x-shockwave-flash" data="<?php echo $swfstring; ?>" width="100%" height="100%">
             <param name="quality" value="high" />
             <param name="bgcolor" value="#000000" />
-            <param name="allowScriptAccess" value="sameDomain" />
+            <param name="allowScriptAccess" value="always" />
             <param name="allowFullScreen" value="true" />
             <!--<![endif]-->
         </object>

@@ -44,8 +44,8 @@ $signsource = sha1($sign_str);
 if($sign != $signsource)return $errors[501];
 
 //签名验证成功,开始写入数据
-$user = $_platform['name'].$user;
-$orderId = $_platform['name'].$orderId;
+$user = $_platform['bflag'].$user;
+$orderId = $_platform['bflag'].'_'.$orderId;
 $db = new DB;
 $dynamic_db = new DB;
 try{
@@ -95,7 +95,7 @@ try{
 
     $db -> commit();
     $dynamic_db->commit();
-    return '{code:1,message:"充值成功"}';
+    return '{"code":1,"message":"充值成功"}';
 }catch (Exception $e){
     $db -> rollback();
     $db -> close();

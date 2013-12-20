@@ -44,7 +44,22 @@ $user = $_platform['bflag'].$user;
 //验证角色
 $db -> connect($server->ip.':'.$server->port,$server->dbuser,$server->dbpwd);
 $db -> select_db($server->dynamic_dbname);
-$role = $db -> select('name') -> from('fr_user') -> where("account_name = '$user' and  server=$sid") -> get() -> result_object();
-if($role != FALSE && !empty($role->name))
-    return '{code:1,message:"角色存在"}';
-return '{code:503,message:"角色不存在"}';
+$role = $db -> select('name,yuanbao,levels') -> from('fr_user') -> where("account_name = '$user' and  server=$sid") -> get() -> result_object();
+if($role != FALSE && !empty($role->name)){
+            $db ->connect(DB_HOST.':'.DB_PORT,DB_USER,DB_PWD);
+            $db -> select_db(DB_BASE);
+            $base = $db->select('yuanbao,yuanbaonum') -> from("fr2_base") -> where("loginname = '$user'")->get() -> result_object();
+            $returnparams = array(
+                    "code" => 1,
+                    "message"=>'角色存在',
+                    "data" => array(
+                        'name' => $role->name,
+                        'yuanbao' => $role->yuanbao,
+                        'level' => $role->levels,
+                        'cznum' => $base->yuanbaonum,
+                         'cz' => $base->yuanbao/RATIO
+                    )
+            );
+            return json_encode($returnparams);
+}
+return '{"code":503,"message":"角色不存在"}';
