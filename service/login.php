@@ -8,7 +8,7 @@
  */
 
 if(!defined('BASEPATH'))exit;
-
+//防沉迷不传的话或者为0的话 就代表是成年人
 $time_local = time();
 $time = $input -> get('time');
 $username = $input->get('username');

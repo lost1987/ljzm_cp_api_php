@@ -5,6 +5,7 @@
  * Date: 13-12-11
  * Time: 下午5:16
  */
+if(!defined('BASEPATH'))exit;
 exec('tasklist|findstr /i "SQLExecution.exe"',$output,$stat);//检测是否有进程存在
 if(!empty($output[0]) && $stat == 0)return -2;//进程存在不进行操作
 

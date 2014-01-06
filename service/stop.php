@@ -5,7 +5,7 @@
  * Date: 13-12-11
  * Time: 下午5:14
  */
-
+if(!defined('BASEPATH'))exit;
 $command= "c:\\server".$sid."\\OpenServer.exe CloseServer.exe ServerMgrMFC".$sid.'.exe';
 exec($command,$output,$stat);
 if($stat == 0){

@@ -5,7 +5,7 @@
  * Date: 13-12-11
  * Time: 下午5:14
  */
-
+if(!defined('BASEPATH'))exit;
 //这里开始操作系统函数c:\wamp\www\server10001\OpenServer ServerMgrMFC10001.exe
 $logid  = $input->get('logid');
 $command ="c:\\server".$sid."\\OpenServer ServerMgrMFC".$sid.'.exe';

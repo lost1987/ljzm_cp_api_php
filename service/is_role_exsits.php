@@ -6,7 +6,7 @@
  * Time: 下午4:29
  * 查询角色是否存在
  */
-
+if(!defined('BASEPATH'))exit;
 $time = $input -> get('time');
 $key = $_platform['key'];//平台唯一标识
 $user = $input->get('user');//应该是用户的loginname或者account_name

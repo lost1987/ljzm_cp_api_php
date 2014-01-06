@@ -10,10 +10,10 @@ if(!defined('BASEPATH'))exit;
 //查询游戏版本
 $ver = $db -> select("version") -> from(TB_CVERSION) -> where("id = $server->gamecver") -> get() -> result_object();
 $series = $db -> select("name") -> from(TB_SERIES) -> where("id = $server->gameseries") -> get() -> result_object();
-$binurl = BASEURL.$series->name.'_'.$ver->version.'/bin/';
-$resurl = BASEURL.$series->name.'_'.$ver->version.'/';
-$urlroot = BASEURL.$series->name.'_'.$ver->version.'/';
-$swfstring = $binurl . 'ljzm_main10.swf?ver=' . CURVER . '&server=' . $server->server_ip . '&port=' . $server->server_port . '&res=' . $resurl . '&bin=' . $binurl . '&loginname=' . $username . '&loginpwd=' . $password . '&logintime=123'  .  '&sid=' . $sid . '&loginmode=new&urlroot=' . $urlroot;
+$binurl = BASEURL.$series->name.'_'.$ver->version.'.zip/bin/';
+$resurl = BASEURL.$series->name.'_'.$ver->version.'.zip/';
+$urlroot = BASEURL.$series->name.'_'.$ver->version.'.zip/';
+$swfstring = $binurl . 'ljzm_main10.swf?ver=' . $ver->version . '&server=' . $server->server_ip . '&port=' . $server->server_port . '&res=' . $resurl . '&bin=' . $binurl . '&loginname=' . $username . '&loginpwd=' . $password . '&logintime=123'  .  '&sid=' . $sid . '&loginmode=new&urlroot=' . $urlroot.'&aid='.$server->bid;
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
