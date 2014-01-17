@@ -6,6 +6,7 @@
  * Time: 下午5:14
  */
 if(!defined('BASEPATH'))exit;
+$logid = $input ->get('logid');
 //关闭服务
 $command= "c:\\server".$sid."\\OpenServer.exe CloseServer.exe ServerMgrMFC".$sid.'.exe';
 exec($command,$output,$stat);

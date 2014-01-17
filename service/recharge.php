@@ -57,6 +57,17 @@ try{
     $server = $db -> select('*') -> from(TB_SERVERS) -> where("id = $serverid") -> get() -> result_object();
     if(FALSE == $server)throw new Exception(502);
 
+    //判断是否有合服或混服
+    if($server->mergeid != 0 && $server->complexid != 0){
+        $server = $db->select()->from(TB_SERVERS)->where("id=$server->mergeid")->get()->result_object();
+    }else if($server->mergeid != 0 && $server->complexid == 0){
+        $server = $db->select()->from(TB_SERVERS)->where("id=$server->mergeid")->get()->result_object();
+    }else if($server->complexid !=0 && $server->mergeid == 0){
+        $server = $db->select()->from(TB_SERVERS)->where("id=$server->complexid")->get()->result_object();
+        $sid = $server->id % 10000;
+    }
+    if(FALSE == $server)throw new Exception(502);
+
     $db -> select_db(DB_BASE);
     $base = $db -> select('aountid')->from("fr2_base")->where("loginname='$user'")->get()->result_object();
     if(FALSE==$base || empty($base->aountid))throw new Exception(504);
@@ -75,7 +86,7 @@ try{
     if(!$db -> query("update fr2_base set yuanbao=yuanbao+$gold,yuanbaonum=yuanbaonum+1 where aountid = $accountid")->queryState)
         throw new Exception(600);
 
-    if(!$dynamic_db -> query("update fr_user set saveyuanbao=saveyuanbao+$gold,mask31=mask31+$gold  where id = $uid")->queryState)
+    if(!$dynamic_db -> query("update fr_user set saveyuanbao=saveyuanbao+$gold,mask31=mask31+$gold  where id = $uid and server=$sid")->queryState)
         throw new Exception(601);
 
     if(!$dynamic_db -> query("insert into  fr2_record (type, id1, id2, param1, param2, param4, str, str2) values (0,$uid,0,90000001,$gold,44,'{$_SERVER['REMOTE_ADDR']}','$orderId')")->queryState)

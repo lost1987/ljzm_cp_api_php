@@ -8,7 +8,7 @@
  */
 
 session_start();
-set_time_limit(60);
+set_time_limit(0);
 header("content-type:text/html;charset=utf-8");
 define('BASEPATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
 require 'conf/config.inc.php';

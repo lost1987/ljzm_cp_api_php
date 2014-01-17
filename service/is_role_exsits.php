@@ -40,6 +40,17 @@ $serverid = 10000*$_platform['bid'] + intval($sid);
 $server = $db -> select("*")->from(TB_SERVERS)->where("id = $serverid")->get()->result_object();
 if(FALSE == $server)return $errors[502];
 
+//判断是否有合服或混服
+if($server->mergeid != 0 && $server->complexid != 0){
+    $server = $db->select()->from(TB_SERVERS)->where("id=$server->mergeid")->get()->result_object();
+}else if($server->mergeid != 0 && $server->complexid == 0){
+    $server = $db->select()->from(TB_SERVERS)->where("id=$server->mergeid")->get()->result_object();
+}else if($server->complexid !=0 && $server->mergeid == 0){
+    $server = $db->select()->from(TB_SERVERS)->where("id=$server->complexid")->get()->result_object();
+    $sid = $server->id % 10000;
+}
+if(FALSE == $server)throw new Exception(502);
+
 $user = $_platform['bflag'].$user;
 //验证角色
 $db -> connect($server->ip.':'.$server->port,$server->dbuser,$server->dbpwd);

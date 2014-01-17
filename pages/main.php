@@ -13,7 +13,20 @@ $series = $db -> select("name") -> from(TB_SERIES) -> where("id = $server->games
 $binurl = BASEURL.$series->name.'_'.$ver->version.'.zip/bin/';
 $resurl = BASEURL.$series->name.'_'.$ver->version.'.zip/';
 $urlroot = BASEURL.$series->name.'_'.$ver->version.'.zip/';
-$swfstring = $binurl . 'ljzm_main10.swf?ver=' . $ver->version . '&server=' . $server->server_ip . '&port=' . $server->server_port . '&res=' . $resurl . '&bin=' . $binurl . '&loginname=' . $username . '&loginpwd=' . $password . '&logintime=123'  .  '&sid=' . $sid . '&loginmode=new&urlroot=' . $urlroot.'&aid='.$server->bid;
+$aid = $server->bid;//原始运营商ID
+//规则 合服过的服务器是不能混服的 AND 混服的服务器还可以再合服一次
+if($server->mergeid != 0 && $server->complexid !=0){//判断合服和混服 如果合服混服标识同时存在 那么以合服的地址ip为准
+        $_server = $db -> select() -> from(TB_SERVERS) -> where("id=$server->mergeid") -> get() -> result_object();
+        $server = $_server;
+}else if($server -> mergeid !=0 && $server->complexid == 0){
+        $_server = $db -> select() -> from(TB_SERVERS) -> where("id=$server->mergeid") -> get() -> result_object();
+        $server = $_server;
+}else if($server -> complexid != 0 && $server-> mergeid ==0 ){
+        $_server = $db -> select() -> from(TB_SERVERS) -> where("id=$server->complexid") -> get() -> result_object();
+        $server = $_server;
+}
+
+$swfstring = $binurl . 'ljzm_main10.swf?ver=' . $ver->version . '&server=' . $server->server_ip . '&port=' . $server->server_port . '&res=' . $resurl . '&bin=' . $binurl . '&loginname=' . $username . '&loginpwd=' . $password . '&logintime=123'  .  '&sid=' . $sid . '&loginmode=new&urlroot=' . $urlroot.'&aid='.$aid;
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">

@@ -17,6 +17,5 @@ return array(
        8 =>'merge',
        9 => 'rollback',
        10 => 'clear',
-       11 => 'check_game_process',
-       12=> 'client_update'
+       11 => 'check_game_process'
 );
